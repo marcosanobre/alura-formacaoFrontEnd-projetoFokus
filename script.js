@@ -11,7 +11,7 @@ const imgBotaoStartStop = document.querySelector('#start-pause img');
 //const musicaFocoInput = document.querySelector("#alternar-musica");
 // ou
 const musicaFocoInput = document.getElementById("alternar-musica");
-const musica = new Audio('/sons/luna-rise-part-one.mp3');
+const musica = new Audio('./sons/luna-rise-part-one.mp3');
 musica.loop = true;
 
 const audioPlay = new Audio('./sons/play.wav');
@@ -53,7 +53,7 @@ function alteraContexto( contexto ) {
         contexto.classList.remove('active');
     });
     html.setAttribute( 'data-contexto', contexto );
-    banner.setAttribute( 'src', `/imagens/${contexto}.png`);
+    banner.setAttribute( 'src', `./imagens/${contexto}.png`);
     switch (contexto) {
         case "foco":
             appTitle.innerHTML = `
@@ -101,14 +101,15 @@ function iniciarOuPausar() {
     audioPlay.play();
     intervaloId = setInterval( contagemRegressiva, 1000 );
     comecarPausarBt.textContent = 'Pausar';
-    imgBotaoStartStop.setAttribute( 'src', "/imagens/pause.png");
+    imgBotaoStartStop.setAttribute( 'src', "./imagens/pause.png");
 }
 
 function zerar() {
     clearInterval(intervaloId);
-    imgBotaoStartStop.setAttribute( 'src', "/imagens/play_arrow.png");
+    imgBotaoStartStop.setAttribute( 'src', "./imagens/play_arrow.png");
     comecarPausarBt.textContent = 'Começar';
     intervaloId = null;
+    tempoDecorridoEmSegundos = 5;
     return;
 }
 
