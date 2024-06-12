@@ -8,6 +8,7 @@ const botoes = document.querySelectorAll('.app__card-button'); // classe comum a
 const startPauseBt = document.querySelector('#start-pause');
 const comecarPausarBt = document.querySelector('#start-pause span');
 const imgBotaoStartStop = document.querySelector('#start-pause img');
+const tempoNaTela = document.querySelector('#timer');
 //const musicaFocoInput = document.querySelector("#alternar-musica");
 // ou
 const musicaFocoInput = document.getElementById("alternar-musica");
@@ -18,7 +19,7 @@ const audioPlay = new Audio('./sons/play.wav');
 const audioPausa = new Audio('./sons/pause.mp3');
 const audioTempoFinalizado = new Audio('./sons/beep.mp3');
 
-let tempoDecorridoEmSegundos = 5;
+let tempoDecorridoEmSegundos = 1500;
 let intervaloId = null;
 
 musicaFocoInput.addEventListener('change', () => {
@@ -32,23 +33,27 @@ musicaFocoInput.addEventListener('change', () => {
 
 // Adicionando um evento ao botao para mudar um atributo
 focoBt.addEventListener( 'click', () => {
+    tempoDecorridoEmSegundos = 1500;
     alteraContexto('foco');
     focoBt.classList.add('active');
 });
 
 // Adicionando um evento ao botao para mudar um atributo
 curtoBt.addEventListener( 'click', () => {
+    tempoDecorridoEmSegundos = 300;
     alteraContexto('descanso-curto');
     curtoBt.classList.add('active');
 });
 
 // Adicionando um evento ao botao para mudar um atributo
 longoBt.addEventListener( 'click', () => {
+    tempoDecorridoEmSegundos = 900;
     alteraContexto('descanso-longo');
     longoBt.classList.add('active');
 });
 
 function alteraContexto( contexto ) {
+    mostrarTempo();
     botoes.forEach( function (contexto) {
         contexto.classList.remove('active');
     });
@@ -86,8 +91,7 @@ const contagemRegressiva = () => {
         return;
     }
     tempoDecorridoEmSegundos -= 1;
-    console.log( 'Temporizador: ' + tempoDecorridoEmSegundos );
-    console.log( 'Id: ' + intervaloId );
+    mostrarTempo();
 }
 
 startPauseBt.addEventListener('click', iniciarOuPausar);
@@ -109,9 +113,14 @@ function zerar() {
     imgBotaoStartStop.setAttribute( 'src', "./imagens/play_arrow.png");
     comecarPausarBt.textContent = 'Começar';
     intervaloId = null;
-    tempoDecorridoEmSegundos = 5;
+    tempoDecorridoEmSegundos = 1500;
     return;
 }
 
+function mostrarTempo() {
+    const tempo = new Date( tempoDecorridoEmSegundos * 1000 );
+    const tempoFormatado = tempo.toLocaleTimeString( 'pt-Br', {minute: '2-digit', second: '2-digit'} );
+    tempoNaTela.innerHTML = `${tempoFormatado}`;
+}
 
-
+mostrarTempo();
